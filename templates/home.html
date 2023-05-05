@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <!-- Votre menu de navigation ici -->
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <!-- Votre pied de page ici -->
+    </footer>
+    {% block extra_body %}{% endblock %}
+</body>
+
+</html>
