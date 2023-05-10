@@ -22,13 +22,15 @@
 }
 
 #display_tickets ul {
-    width: 100%;
+    width: 80%;
     height: 80%;
     display: inline-flex;
     justify-content: space-between;
     flex-wrap: wrap;
     max-height: 80%;
     overflow: scroll;
+    position: relative;
+    left: calc(100vw - 90%);
 }
 
 #display_tickets ul li {
