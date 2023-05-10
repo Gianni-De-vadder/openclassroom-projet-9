@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <form method="POST" action="{% url 'signup' %}">
     {% csrf_token %}
     <label for="username">Nom d'utilisateur:</label>
@@ -20,3 +23,4 @@
 {% else %}
 <p>Vous avez déjà un compte ? <a href="{% url 'login' %}">Connectez-vous</a></p>
 {% endif %}
+{% endblock %}

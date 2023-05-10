@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
     <label for="username">Nom d'utilisateur:</label>
@@ -8,5 +10,5 @@
 
     <input type="submit" value="Se connecter">
 </form>
-
 <p>Pas encore de compte? <a href="{% url 'signup' %}">S'inscrire ici</a></p>
+{% endblock %}
