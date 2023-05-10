@@ -17,6 +17,7 @@ def create_ticket(request):
     return render(request, "review/create_ticket.html")
 
 
+@login_required
 def tickets(request):
     all_tickets = Ticket.objects.all()
     context = {"tickets": all_tickets}

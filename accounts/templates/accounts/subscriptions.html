@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Abonnement</h1>
+<form method="post">
+    {% csrf_token %}
+    <select name="user">
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">S'abonner</button>
+</form>
+{% endblock %}
