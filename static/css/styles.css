@@ -23,17 +23,17 @@ header nav {
 }
 
 header nav span {
-    width: 70%;
+    width: 65%;
     float: left;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
-    font-weight: 700;
 }
 
 header nav ul {
-    width: 30%;
+    width: 35%;
     float: right;
+    font-size: 1.3rem;
     display: inline-flex;
     justify-content: space-around;
     text-decoration: none;

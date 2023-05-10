@@ -14,10 +14,10 @@
         <nav>
             <span>LITReview</span>
             <ul>
+                {% if user.is_authenticated %}
                 <li><a href="/review/flux">Flux</a></li>
                 <li><a href="/review/posts">Posts</a></li>
                 <li><a href="/accounts/abonnement">Abonnement</a></li>
-                {% if user.is_authenticated %}
                 <li><a href="/accounts/logout">Se déconnecter</a></li>
                 {% else %}
                 <li><a href="/accounts/login">Se connecter</a></li>
