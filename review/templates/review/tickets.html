@@ -4,18 +4,23 @@
 <link rel="stylesheet" href="{% static 'review/css/tickets.css' %}">
 {% endblock %}
 {% block content %}
-<h1>My Tickets</h1>
-{% if tickets %}
-<ul>
-    {% for ticket in tickets %}
-    {% if ticket.user == request.user %}
-    <li>{{ ticket.title }}</li>
-    <p>{{ ticket.description }}</p>
-    {% endif %}
-    {% endfor %}
+<div id="display_tickets">
+    <a href="/review/create_ticket">Ajouter un ticket</a>
+    {% if tickets %}
+    <h1>Mes tickets :</h1>
+    <ul>
+        {% for ticket in tickets %}
+        {% if ticket.user == request.user %}
+        <li>
+            <h2>{{ ticket.title }}</h2>
+            <p>{{ ticket.description }}</p>
+        </li>
+        {% endif %}
+        {% endfor %}
 
-</ul>
-{% else %}
-<p>No tickets found.</p>
-{% endif %}
+    </ul>
+    {% else %}
+    <p id="no-tickets">No tickets found.</p>
+    {% endif %}
+</div>
 {% endblock %}

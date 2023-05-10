@@ -8,10 +8,17 @@
     margin: 0;
 }
 
+main {
+    height: 80vh;
+    width: 100%;
+}
+
 header {
     height: 10vh;
     width: 100%;
     font-family: CoolVetica, sans-serif;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, .6);
+    margin-bottom: 5vh;
 }
 
 header nav {
@@ -40,7 +47,12 @@ header nav ul {
     list-style-type: none;
 }
 
-header nav ul li a {
+header a {
     color: black;
-    text-decoration: none;
+    text-decoration: underline;
+}
+
+footer {
+    height: 10vh;
+    width: 100%;
 }
