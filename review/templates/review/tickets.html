@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'review/css/tickets.css' %}">
+{% endblock %}
+{% block content %}
+<h1>My Tickets</h1>
+{% if tickets %}
+<ul>
+    {% for ticket in tickets %}
+    {% if ticket.user == request.user %}
+    <li>{{ ticket.title }}</li>
+    <p>{{ ticket.description }}</p>
+    {% endif %}
+    {% endfor %}
+
+</ul>
+{% else %}
+<p>No tickets found.</p>
+{% endif %}
+{% endblock %}
