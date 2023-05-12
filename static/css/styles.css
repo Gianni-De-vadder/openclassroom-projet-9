@@ -45,6 +45,7 @@ header nav ul {
     justify-content: space-around;
     text-decoration: none;
     list-style-type: none;
+    margin-bottom: 0;
 }
 
 header a {

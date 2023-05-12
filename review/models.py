@@ -3,6 +3,8 @@ from django.db import models
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.db import models
+from django.contrib.auth import get_user_model
 
 
 class Ticket(models.Model):
@@ -35,15 +37,14 @@ class Review(models.Model):
         return f"{self.rating} - {self.headline}"
 
 
+User = get_user_model()
+
+
 class UserFollows(models.Model):
-    user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following"
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
     followed_user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="followed_by",
+        User, on_delete=models.CASCADE, related_name="followers"
     )
 
-    class Meta:
-        unique_together = ("user", "followed_user")
+    def __str__(self):
+        return f"{self.user.username} follows {self.followed_user.username}"

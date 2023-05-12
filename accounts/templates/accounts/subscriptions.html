@@ -1,14 +1,60 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Abonnement</h1>
-<form method="post">
-    {% csrf_token %}
-    <select name="user">
-        {% for user in users %}
-        <option value="{{ user.id }}">{{ user.username }}</option>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
         {% endfor %}
-    </select>
-    <button type="submit">S'abonner</button>
-</form>
+</ul>
+{% endif %}
+
+<!-- Votre code HTML existant pour afficher la liste déroulante des utilisateurs -->
+
+<div class="container">
+    <h1 class="text-center">Abonnement</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="user">Utilisateur :</label>
+                    <select class="form-control" name="user" id="user">
+                        {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">S'abonner</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Tableau des abonnements -->
+<div class="container mt-4">
+    <h2 class="text-center">Vos abonnements</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for follower in request.user.following.all %}
+            <tr>
+                <td>{{ follower.followed_user.username }}</td>
+                <td>
+                    <form action="{% url 'unsubscribe' follower.followed_user.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Se désabonner</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
