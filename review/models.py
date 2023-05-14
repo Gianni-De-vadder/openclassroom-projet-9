@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 
 class Ticket(models.Model):
@@ -14,6 +15,9 @@ class Ticket(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="tickets"
     )
     image = models.ImageField(null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse("create_review", kwargs={"ticket_id": self.id})
 
     def __str__(self):
         return self.title

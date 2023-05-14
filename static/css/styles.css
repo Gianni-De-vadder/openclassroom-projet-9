@@ -53,6 +53,14 @@ header a {
     text-decoration: underline;
 }
 
+.header_user_name {
+    font-family: CoolVetica, sans-serif;
+    margin-bottom: 0;
+    width: 20%;
+    text-transform: capitalize;
+    text-align: center;
+}
+
 footer {
     height: 10vh;
     width: 100%;

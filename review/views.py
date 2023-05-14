@@ -1,9 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from .models import Ticket, UserFollows, Review
+from django.shortcuts import get_object_or_404, render
+from django.contrib.auth import get_user_model
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Ticket, UserFollows
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from review.forms import ReviewForm
 
 
 @login_required
@@ -17,6 +24,19 @@ def create_ticket(request):
         ticket.save()
         # return redirect("ticket_detail", ticket.id)
     return render(request, "review/create_ticket.html")
+
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+
+    if ticket.user == request.user:
+        ticket.delete()
+        messages.success(request, "Le ticket a été supprimé avec succès.")
+    else:
+        messages.error(request, "Vous n'êtes pas autorisé à supprimer ce ticket.")
+
+    return redirect("tickets")
 
 
 @login_required
@@ -50,11 +70,11 @@ def subscription_view(request):
                 return redirect("subscription")
 
     User = get_user_model()
-    users = User.objects.exclude(id=request.user.id).exclude(
+    users_to_follow = User.objects.exclude(id=request.user.id).exclude(
         id__in=UserFollows.objects.filter(user=request.user).values("followed_user_id")
     )
-    context = {"users": users}
-    return render(request, "accounts/subscriptions.html", context)
+    context = {"users": users_to_follow}
+    return render(request, "review/subscriptions.html", context)
 
 
 from django.contrib import messages
@@ -79,3 +99,30 @@ def unsubscribe(request, user_id):
         messages.error(request, "Vous ne suivez pas cet utilisateur.")
 
     return redirect("subscription")
+
+
+@login_required
+def create_review(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    form = ReviewForm(request.POST or None, ticket_title=ticket.title)
+
+    if request.method == "POST":
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            print(review)  # Vérification dans la console
+            return redirect("tickets")
+
+    context = {
+        "form": form,
+        "ticket": ticket,
+    }
+    return render(request, "review/create_review.html", context)
+
+
+def review_detail_view(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    context = {"review": review}
+    return render(request, "review/review_detail.html", context)

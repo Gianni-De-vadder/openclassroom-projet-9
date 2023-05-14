@@ -1,17 +1,35 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Home</title>
-</head>
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'review/css/tickets.css' %}">
+{% endblock %}
 
-<body>
-    <h1>Bienvenue {{ user.username }}!</h1>
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Logout">
-    </form>
-</body>
+{% block content %}
+<div class="container">
+    <h1>Flux :</h1>
+    <ul class="list-group">
+        {% for ticket in tickets %}
+        <li class="list-group-item">
+            <h4>{{ ticket.title }}</h4>
+            <p>{{ ticket.description }}</p>
 
-</html>
+            {% if ticket.reviews.exists %}
+            <!-- Afficher les critiques associées à la demande de critique -->
+            <ul class="list-group">
+                {% for review in ticket.reviews.all %}
+                <li class="list-group-item">
+                    <p class="text-muted">Critique : {{ review.headline }}</p>
+                    <a href="{% url 'review_detail' review.id %}" class="btn btn-primary">Voir</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <!-- Afficher le bouton pour répondre à la demande de critique -->
+            <a href="{% url 'create_review' ticket.id %}" class="btn btn-success">Répondre</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
