@@ -31,7 +31,7 @@
     {% endif %}
 
     {% if reviews %}
-    <h2>Mes reviews :</h2>
+    <h2>Mes Critiques :</h2>
     <ul>
         {% for review in reviews %}
         <li>
@@ -41,14 +41,14 @@
             </div>
             <p class="review-description">{{ review.description }}</p>
             <div class="review-actions">
-                <a class="btn btn-primary" href="{% url 'review_detail' review.id %}">Voir la review</a>
-                <a class="btn btn-danger" href="{% url 'delete_review' review.id %}">Supprimer la review</a>
+                <a class="btn btn-primary" href="{% url 'review_detail' review.id %}">Voir</a>
+                <a class="btn btn-danger" href="{% url 'delete_review' review.id %}">Supprimer</a>
             </div>
         </li>
         {% endfor %}
     </ul>
     {% else %}
-    <p class="no-tickets">Pas de reviews.</p>
+    <p class="no-tickets">Pas de critiques.</p>
     {% endif %}
 </div>
 

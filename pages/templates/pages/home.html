@@ -22,8 +22,9 @@
                 <li class="list-group-item">
                     <p class="text-muted">Critique : {{ review.headline }}</p>
                     <a href="{% url 'review_detail' review.id %}" class="btn btn-primary">Voir</a>
+                    {% if user.id == review.user.id %}
                     <a href="{% url 'delete_review' review.id %}" class="btn btn-danger">Supprimer Critique</a>
-
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>
