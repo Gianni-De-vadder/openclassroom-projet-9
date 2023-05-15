@@ -22,13 +22,15 @@
         </div>
         <div class="form-group">
             <label for="headline">Titre :</label>
-            <input type="text" name="headline" id="headline" class="form-control">
+            <input type="text" name="headline" id="headline" class="form-control" value="{{ ticket.title}}" readonly>
         </div>
         <div class="form-group">
             <label for="body">Commentaire :</label>
             <textarea name="body" id="body" class="form-control"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Soumettre</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+        </div>
     </form>
 </div>
 {% endblock %}

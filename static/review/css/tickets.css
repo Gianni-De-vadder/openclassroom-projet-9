@@ -52,7 +52,7 @@
     line-height: 5vh;
 }
 
-#no-tickets {
+.no-tickets {
     display: flex;
     justify-content: center;
     align-items: center;

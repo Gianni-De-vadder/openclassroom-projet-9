@@ -20,6 +20,12 @@ def create_ticket(request):
     return render(request, "review/create_ticket.html")
 
 
+def ticket_detail(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    context = {"ticket": ticket}
+    return render(request, "review/ticket_detail.html", context)
+
+
 @login_required
 def delete_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
@@ -34,9 +40,27 @@ def delete_ticket(request, ticket_id):
 
 
 @login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if review.user == request.user:
+        review.delete()
+        messages.success(request, "La review a été supprimé avec succès.")
+    else:
+        messages.error(request, "Vous n'êtes pas autorisé à supprimer cette review.")
+
+    return redirect("home")
+
+
+@login_required
 def tickets(request):
-    all_tickets = Ticket.objects.all()
-    context = {"tickets": all_tickets}
+    user = request.user
+    user_tickets = Ticket.objects.filter(user=user)
+    user_reviews = Review.objects.filter(user=user)
+    context = {
+        "tickets": user_tickets,
+        "reviews": user_reviews,
+    }
     return render(request, "review/tickets.html", context)
 
 
