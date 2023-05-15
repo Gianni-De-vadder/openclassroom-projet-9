@@ -11,6 +11,7 @@
 main {
     height: 80vh;
     width: 100%;
+    font-family: CoolVetica;
 }
 
 header {
@@ -59,6 +60,7 @@ header a {
     width: 20%;
     text-transform: capitalize;
     text-align: center;
+    font-size: 1.5rem;
 }
 
 footer {

@@ -9,8 +9,6 @@
 </ul>
 {% endif %}
 
-<!-- Votre code HTML existant pour afficher la liste déroulante des utilisateurs -->
-
 <div class="container">
     <h1 class="text-center">Abonnement</h1>
     <div class="row justify-content-center">
@@ -19,14 +17,13 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="user">Utilisateur :</label>
-                    <select class="form-control" name="user" id="user">
-                        {% for user in users %}
-                        <option value="{{ user.id }}">{{ user.username }}</option>
-                        {% endfor %}
-                    </select>
+                    <input type="hidden" name="user" id="user-id" value="">
+                    <input type="text" class="form-control" id="user-input">
+                    <div id="user-results"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">S'abonner</button>
             </form>
+
         </div>
     </div>
 </div>
@@ -56,5 +53,36 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    function searchUsers(query) {
+        const url = "{% url 'search_users' %}?query=" + query;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const resultsContainer = document.getElementById("user-results");
+                resultsContainer.innerHTML = "";
+
+                data.forEach(user => {
+                    const userElement = document.createElement("p");
+                    userElement.textContent = user.username;
+                    userElement.addEventListener("click", () => {
+                        document.getElementById("user-id").value = user.id;
+                        document.getElementById("user-input").value = user.username;
+                        resultsContainer.innerHTML = "";
+                    });
+                    resultsContainer.appendChild(userElement);
+                });
+            });
+    }
+
+
+    document.getElementById("user-input").addEventListener("input", event => {
+        const query = event.target.value.trim();
+        if (query.length >= 1) {
+            searchUsers(query);
+        }
+    });
+</script>
 
 {% endblock %}

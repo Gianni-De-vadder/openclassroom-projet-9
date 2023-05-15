@@ -1,16 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Ticket, UserFollows, Review
-from django.shortcuts import get_object_or_404, render
-from django.contrib.auth import get_user_model
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Ticket, UserFollows
-from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from review.forms import ReviewForm
+from django.http import JsonResponse
 
 
 @login_required
@@ -69,12 +63,16 @@ def subscription_view(request):
                 )
                 return redirect("subscription")
 
-    User = get_user_model()
-    users_to_follow = User.objects.exclude(id=request.user.id).exclude(
-        id__in=UserFollows.objects.filter(user=request.user).values("followed_user_id")
-    )
-    context = {"users": users_to_follow}
-    return render(request, "review/subscriptions.html", context)
+    return render(request, "review/subscriptions.html")
+
+
+def search_users(request):
+    query = request.GET.get("query")
+    users = []
+    if query:
+        User = get_user_model()
+        users = User.objects.filter(username__icontains=query).values("id", "username")
+    return JsonResponse(list(users), safe=False)
 
 
 from django.contrib import messages

@@ -7,7 +7,8 @@
 
 {% block content %}
 <div class="container">
-    <h1>Flux :</h1>
+    <h1>Votre Flux :</h1>
+    {% if tickets %}
     <ul class="list-group">
         {% for ticket in tickets %}
         <li class="list-group-item">
@@ -31,5 +32,13 @@
         </li>
         {% endfor %}
     </ul>
+    {% else %}
+    <div class="d-flex align-items-center justify-content-center vh-100">
+        <div class="text-center">
+            <p>Aucune demande de critique disponible.</p>
+            <a href="{% url 'subscription' %}" class="btn btn-primary">S'abonner</a>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

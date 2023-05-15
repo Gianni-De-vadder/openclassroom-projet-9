@@ -7,6 +7,7 @@ from .views import (
     delete_ticket,
     create_review,
     review_detail_view,
+    search_users,
 )
 
 urlpatterns = [
@@ -15,6 +16,7 @@ urlpatterns = [
     path("posts/", tickets, name="tickets"),
     path("posts/<int:ticket_id>/delete/", delete_ticket, name="delete_ticket"),
     path("abonnement/", subscription_view, name="subscription"),
+    path("search_users/", search_users, name="search_users"),
     path("unsubscribe/<int:user_id>/", unsubscribe, name="unsubscribe"),
     path("create_review/<int:ticket_id>/", create_review, name="create_review"),
     path("<int:review_id>/", review_detail_view, name="review_detail"),
