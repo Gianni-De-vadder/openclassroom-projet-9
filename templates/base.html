@@ -32,6 +32,21 @@
         </nav>
     </header>
     <main>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            {% if message.tags == "success" %}
+            <div class="alert alert-success" role="alert">
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            </div>
+            {% elif message.tags == "error" %}
+            <div class="alert alert-danger" role="alert">
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
     <footer>

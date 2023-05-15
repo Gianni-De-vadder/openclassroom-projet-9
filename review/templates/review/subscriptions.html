@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
+
 
 <div class="container">
     <h1 class="text-center">Abonnement</h1>
@@ -53,6 +47,24 @@
         </tbody>
     </table>
 </div>
+<div class="container mt-4">
+    <h2 class="text-center">Vos abonnés</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for follower in request.user.followers.all %}
+            <tr>
+                <td>{{ follower.user.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 
 <script>
     function searchUsers(query) {

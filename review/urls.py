@@ -10,6 +10,7 @@ from .views import (
     search_users,
     delete_review,
     ticket_detail,
+    create_ticket_review,
 )
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path("delete_review/<int:review_id>/", delete_review, name="delete_review"),
     path("<int:review_id>/", review_detail_view, name="review_detail"),
     path("review/tickets/<int:ticket_id>/", ticket_detail, name="ticket_detail"),
+    path("create_ticket_review/", create_ticket_review, name="create_ticket_review"),
 ]

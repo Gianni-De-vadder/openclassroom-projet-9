@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Ticket, UserFollows, Review
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from review.forms import ReviewForm
+from review.forms import ReviewForm, TicketReviewForm
 from django.http import JsonResponse
 
 
@@ -71,7 +71,6 @@ def subscription_view(request):
         if user_id:
             User = get_user_model()
             user_to_follow = User.objects.get(id=user_id)
-
             # Vérifier si la relation existe déjà
             if UserFollows.objects.filter(
                 user=request.user, followed_user=user_to_follow
@@ -142,6 +141,38 @@ def create_review(request, ticket_id):
         "ticket": ticket,
     }
     return render(request, "review/create_review.html", context)
+
+
+from .forms import TicketReviewForm
+
+
+@login_required
+def create_ticket_review(request):
+    if request.method == "POST":
+        form = TicketReviewForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            body = form.cleaned_data["body"]
+            rating = form.cleaned_data["rating"]
+            ticket = Ticket.objects.create(
+                title=title, description=description, user=request.user
+            )
+            review = Review.objects.create(
+                ticket=ticket,
+                rating=rating,
+                headline=title,
+                body=body,
+                user=request.user,
+            )
+            return redirect("tickets")
+    else:
+        form = TicketReviewForm()
+
+    context = {
+        "form": form,
+    }
+    return render(request, "review/create_ticket_review.html", context)
 
 
 def review_detail_view(request, review_id):

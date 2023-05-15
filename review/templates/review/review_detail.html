@@ -15,6 +15,7 @@
             <p class="card-text">Note : {{ review.rating }}</p>
             <p class="card-text">Auteur : {{ review.user }}</p>
             <p class="card-text">Date de création : {{ review.time_created }}</p>
+            <a class="btn btn-primary" href="{% url 'tickets' %}">Retour aux reviews</a>
         </div>
     </div>
 </div>
