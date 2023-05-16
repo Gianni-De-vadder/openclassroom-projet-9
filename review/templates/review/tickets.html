@@ -6,55 +6,62 @@
 {% endblock %}
 
 {% block content %}
-<div class="col">
-    <a class="btn btn-primary mb-3" href="/review/create_ticket">Demander une critique</a>
-    <a class="btn btn-primary mb-3" href="/review/create_ticket_review">Créer une critique</a>
-
-    {% if tickets %}
-    <h1>Mes tickets :</h1>
-
-    <ul class="list-group">
-        {% for ticket in tickets %}
-        <li class="list-group-item ticket-item">
-            <div class="ticket-header">
-                <h2 class="ticket-title">{{ ticket.title }}</h2>
-                <p class="ticket-date">Créé le {{ ticket.time_created }}</p>
-            </div>
-            <p class="ticket-description">{{ ticket.description }}</p>
-            <div class="ticket-actions">
-                <a class="btn btn-primary" href="{% url 'ticket_detail' ticket.id %}">Voir</a>
-                <a class="btn btn-danger" href="{% url 'delete_ticket' ticket.id %}">Supprimer</a>
-                <a class="btn btn-secondary" href="{% url 'update_ticket' ticket.id %}">Modifier</a>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p class="no-tickets">Pas de tickets.</p>
-    {% endif %}
-
-    {% if reviews %}
-    <h2>Mes Critiques :</h2>
-    <ul class="list-group">
-        {% for review in reviews %}
-        <li style="list-style-type: none;" class="list-group-item ticket-item">
-            <div class="review-header">
-                <h3 class="review-title">{{ review.ticket.title }}</h3>
-                <p class="review-description">Note: {{ review.rating }}</p>
-                <p class="review-date">Créé le {{ review.time_created }}</p>
-            </div>
-            <p class="review-description">{{ review.description }}</p>
-            <div class="review-actions">
-                <a class="btn btn-primary" href="{% url 'review_detail' review.id %}">Voir</a>
-                <a class="btn btn-danger" href="{% url 'delete_review' review.id %}">Supprimer</a>
-                <a class="btn btn-secondary" href="{% url 'update_review' review.id %}">Modifier</a>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p class="no-tickets">Pas de critiques.</p>
-    {% endif %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <a class="btn btn-primary mb-3" href="/review/create_ticket">Demander une critique</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a class="btn btn-primary mb-3" href="/review/create_ticket_review">Créer une critique</a>
+        </div>
+    </div>
 </div>
 
+
+{% if tickets %}
+<h1>Mes tickets :</h1>
+
+<ul class="list-group">
+    {% for ticket in tickets %}
+    <li class="list-group-item ticket-item">
+        <div class="ticket-header">
+            <h2 class="ticket-title">{{ ticket.title }}</h2>
+            <p class="ticket-date">Créé le {{ ticket.time_created }}</p>
+        </div>
+        <p class="ticket-description">{{ ticket.description }}</p>
+        <div class="ticket-actions">
+            <a class="btn btn-primary mr-2" href="{% url 'ticket_detail' ticket.id %}">Voir</a>
+            <a class="btn btn-danger mr-2" href="{% url 'delete_ticket' ticket.id %}">Supprimer</a>
+            <a class="btn btn-secondary" href="{% url 'update_ticket' ticket.id %}">Modifier</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="no-tickets">Pas de tickets.</p>
+{% endif %}
+
+{% if reviews %}
+<h2>Mes Critiques :</h2>
+<ul class="list-group">
+    {% for review in reviews %}
+    <li class="list-group-item ticket-item">
+        <div class="review-header">
+            <h3 class="review-title">{{ review.ticket.title }}</h3>
+            <p class="review-description">Note: {{ review.rating }}</p>
+            <p class="review-date">Créé le {{ review.time_created }}</p>
+        </div>
+        <p class="review-description">{{ review.description }}</p>
+        <div class="review-actions">
+            <a class="btn btn-primary mr-2" href="{% url 'review_detail' review.id %}">Voir</a>
+            <a class="btn btn-danger mr-2" href="{% url 'delete_review' review.id %}">Supprimer</a>
+            <a class="btn btn-secondary" href="{% url 'update_review' review.id %}">Modifier</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="no-tickets">Pas de critiques.</p>
+{% endif %}
+</div>
 {% endblock %}

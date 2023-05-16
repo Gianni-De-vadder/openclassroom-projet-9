@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-
 <div class="container">
     <h1 class="text-center">Abonnement</h1>
     <div class="row justify-content-center">
@@ -11,13 +9,14 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="user">Utilisateur :</label>
-                    <input type="hidden" name="user" id="user-id" value="">
-                    <input type="text" class="form-control" id="user-input">
-                    <div id="user-results"></div>
+                    <div class="input-group">
+                        <input type="hidden" name="user" id="user-id" value="">
+                        <input type="text" class="form-control" id="user-input">
+                    </div>
+                    <div id="user-results" class="mt-2"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">S'abonner</button>
             </form>
-
         </div>
     </div>
 </div>
@@ -47,6 +46,8 @@
         </tbody>
     </table>
 </div>
+
+<!-- Tableau des abonnés -->
 <div class="container mt-4">
     <h2 class="text-center">Vos abonnés</h2>
     <table class="table">
@@ -65,7 +66,6 @@
     </table>
 </div>
 
-
 <script>
     function searchUsers(query) {
         const url = "{% url 'search_users' %}?query=" + query;
@@ -78,6 +78,7 @@
                 data.forEach(user => {
                     const userElement = document.createElement("p");
                     userElement.textContent = user.username;
+                    userElement.classList.add("user-result");
                     userElement.addEventListener("click", () => {
                         document.getElementById("user-id").value = user.id;
                         document.getElementById("user-input").value = user.username;
@@ -88,7 +89,6 @@
             });
     }
 
-
     document.getElementById("user-input").addEventListener("input", event => {
         const query = event.target.value.trim();
         if (query.length >= 1) {
@@ -97,4 +97,10 @@
     });
 </script>
 
+<style>
+    .user-result {
+        cursor: pointer;
+        padding: 5px;
+    }
+</style>
 {% endblock %}

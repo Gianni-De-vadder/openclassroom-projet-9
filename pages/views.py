@@ -14,5 +14,4 @@ def home_view(request):
         "tickets": tickets,
         "reviews": reviews,
     }
-    print(context)
     return render(request, "pages/home.html", context)

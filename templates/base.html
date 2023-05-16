@@ -6,52 +6,79 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     {% block extra_head %}{% endblock %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
     <header>
-        <nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">LITReview</a>
+            <div class="navbar-collapse justify-content-center">
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Flux</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/review/posts">Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/review/abonnement">Abonnement</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
             {% if user.is_authenticated %}
-            <p class="header_user_name">Bienvenue, {{ request.user.username }}</p>
-            {% endif %}
-            <span><a href="/">LITReview</a></span>
-            <ul>
-                {% if user.is_authenticated %}
-                <li><a href="/">Flux</a></li>
-                <li><a href="/review/posts">Posts</a></li>
-                <li><a href="/review/abonnement">Abonnement</a></li>
-                <li><a href="/accounts/logout">Se déconnecter</a></li>
-                {% else %}
-                <li><a href="/accounts/login">Se connecter</a></li>
-                {% endif %}
+            <ul class="navbar-nav">
+                <li style="margin-right: 1vw;" class="nav-item">
+                    <span id="header_user_name" class="navbar-text">Bienvenue, {{ request.user.username }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-danger ml-2" href="/accounts/logout">Se déconnecter</a>
+                </li>
             </ul>
-
+            {% else %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/login">Se connecter</a>
+                </li>
+            </ul>
+            {% endif %}
         </nav>
     </header>
     <main>
         {% if messages %}
-        <ul class="messages">
+        <div class="container mt-4">
             {% for message in messages %}
-            {% if message.tags == "success" %}
-            <div class="alert alert-success" role="alert">
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
             </div>
-            {% elif message.tags == "error" %}
-            <div class="alert alert-danger" role="alert">
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            </div>
-            {% endif %}
             {% endfor %}
-        </ul>
+        </div>
         {% endif %}
         {% block content %}{% endblock %}
     </main>
-    <footer>
-        <!-- Votre pied de page ici -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted">© 2023 Votre entreprise. Tous droits réservés.</p>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-inline text-right">
+                        <li class="list-inline-item"><a href="#">Mentions légales</a></li>
+                        <li class="list-inline-item"><a href="#">Politique de confidentialité</a></li>
+                        <li class="list-inline-item"><a href="#">Conditions d'utilisation</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </footer>
+
     {% block extra_body %}{% endblock %}
 </body>
 

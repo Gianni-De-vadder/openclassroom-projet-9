@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>Votre Flux :</h1>
+    <h1 class="mt-4">Votre Flux :</h1>
     {% if tickets %}
     <ul class="list-group">
         {% for ticket in tickets %}
@@ -16,18 +16,22 @@
             <p>{{ ticket.description }}</p>
             <p>De : {{ ticket.user}}</p>
             {% if ticket.reviews.exists %}
-            <!-- Afficher les critiques associées à la demande de critique -->
-            <ul class="list-group">
-                {% for review in ticket.reviews.all %}
-                <li class="list-group-item">
-                    <p class="text-muted">Critique : {{ review.headline }}</p>
-                    <a href="{% url 'review_detail' review.id %}" class="btn btn-primary">Voir</a>
-                    {% if user.id == review.user.id %}
-                    <a href="{% url 'delete_review' review.id %}" class="btn btn-danger">Supprimer Critique</a>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="card">
+                <div class="card-header">
+                    Critiques associées à la demande de critique
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for review in ticket.reviews.all %}
+                    <li class="list-group-item">
+                        <p class="text-muted">Critique : {{ review.headline }}</p>
+                        <a href="{% url 'review_detail' review.id %}" class="btn btn-primary mr-2">Voir</a>
+                        {% if user.id == review.user.id %}
+                        <a href="{% url 'delete_review' review.id %}" class="btn btn-danger">Supprimer Critique</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
             {% else %}
             <a href="{% url 'create_review' ticket.id %}" class="btn btn-success">Répondre</a>
             {% endif %}
