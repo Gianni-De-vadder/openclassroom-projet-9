@@ -16,8 +16,27 @@ def create_ticket(request):
             title=title, description=description, user=request.user
         )
         ticket.save()
-        # return redirect("ticket_detail", ticket.id)
     return render(request, "review/create_ticket.html")
+
+
+@login_required
+def update_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    if ticket.user == request.user:
+        if request.method == "POST":
+            title = request.POST["title"]
+            description = request.POST["description"]
+            ticket = Ticket.objects.update(
+                title=title, description=description, user=request.user
+            )
+            return redirect("tickets")
+        else:
+            ticket = get_object_or_404(Ticket, id=ticket_id)
+            context = {"ticket": ticket}
+            return render(request, "review/update_ticket.html", context)
+    else:
+        messages.error(request, "Vous n'êtes pas autorisé à modifier ce ticket.")
+        return redirect("home")
 
 
 def ticket_detail(request, ticket_id):
@@ -55,8 +74,8 @@ def delete_review(request, review_id):
 @login_required
 def tickets(request):
     user = request.user
-    user_tickets = Ticket.objects.filter(user=user)
-    user_reviews = Review.objects.filter(user=user)
+    user_tickets = Ticket.objects.filter(user=user).order_by("-time_created")
+    user_reviews = Review.objects.filter(user=user).order_by("-time_created")
     context = {
         "tickets": user_tickets,
         "reviews": user_reviews,
@@ -105,8 +124,6 @@ from django.contrib import messages
 def unsubscribe(request, user_id):
     User = get_user_model()
     user_to_unfollow = get_object_or_404(User, id=user_id)
-
-    # Vérifier si la relation existe
     if UserFollows.objects.filter(
         user=request.user, followed_user=user_to_unfollow
     ).exists():
@@ -143,7 +160,43 @@ def create_review(request, ticket_id):
     return render(request, "review/create_review.html", context)
 
 
-from .forms import TicketReviewForm
+@login_required
+def update_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if review.user == request.user:
+        if request.method == "POST":
+            rating = request.POST["rating"]
+            headline = request.POST["headline"]
+            body = request.POST["body"]
+            review = Review.objects.update(rating=rating, headline=headline, body=body)
+            messages.success(request, "Le ticket a été supprimé avec succès.")
+            return redirect("tickets")
+        else:
+            review = get_object_or_404(Review, id=review_id)
+            context = {"review": review}
+            return render(request, "review/update_review.html", context)
+    else:
+        messages.error(request, "Vous n'êtes pas autorisé à modifier cette critique.")
+        return redirect("home")
+
+
+@login_required
+def update_ticket_review(request, review_id):
+    if request.method == "POST":
+        title = request.POST["title"]
+        description = request.POST["description"]
+        rating = request.POST["rating"]
+        headline = request.POST["headline"]
+        body = request.POST["body"]
+        review = Review.objects.update(rating=rating, headline=headline, body=body)
+        ticket = Ticket.objects.update(
+            title=title, description=description, user=request.user
+        )
+        return redirect("tickets")
+
+    review = get_object_or_404(Review, id=review_id)
+    context = {"review": review}
+    return render(request, "review/update_ticket_review.html", context)
 
 
 @login_required

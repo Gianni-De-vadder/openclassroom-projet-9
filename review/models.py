@@ -11,6 +11,7 @@ class Ticket(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="tickets"
     )
     image = models.ImageField(null=True, blank=True)
+    time_created = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
         return reverse("create_review", kwargs={"ticket_id": self.id})

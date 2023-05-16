@@ -18,12 +18,13 @@
         <li class="list-group-item ticket-item">
             <div class="ticket-header">
                 <h2 class="ticket-title">{{ ticket.title }}</h2>
-                <p class="ticket-date">Créé le {{ ticket.created_date }}</p>
+                <p class="ticket-date">Créé le {{ ticket.time_created }}</p>
             </div>
             <p class="ticket-description">{{ ticket.description }}</p>
             <div class="ticket-actions">
                 <a class="btn btn-primary" href="{% url 'ticket_detail' ticket.id %}">Voir</a>
                 <a class="btn btn-danger" href="{% url 'delete_ticket' ticket.id %}">Supprimer</a>
+                <a class="btn btn-secondary" href="{% url 'update_ticket' ticket.id %}">Modifier</a>
             </div>
         </li>
         {% endfor %}
@@ -34,17 +35,19 @@
 
     {% if reviews %}
     <h2>Mes Critiques :</h2>
-    <ul>
+    <ul class="list-group">
         {% for review in reviews %}
-        <li>
+        <li style="list-style-type: none;" class="list-group-item ticket-item">
             <div class="review-header">
                 <h3 class="review-title">{{ review.ticket.title }}</h3>
-                <p class="review-description">Note: {{ review.note }}</p>
+                <p class="review-description">Note: {{ review.rating }}</p>
+                <p class="review-date">Créé le {{ review.time_created }}</p>
             </div>
             <p class="review-description">{{ review.description }}</p>
             <div class="review-actions">
                 <a class="btn btn-primary" href="{% url 'review_detail' review.id %}">Voir</a>
                 <a class="btn btn-danger" href="{% url 'delete_review' review.id %}">Supprimer</a>
+                <a class="btn btn-secondary" href="{% url 'update_review' review.id %}">Modifier</a>
             </div>
         </li>
         {% endfor %}

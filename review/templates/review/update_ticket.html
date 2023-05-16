@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Modifier demande de critique</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Titre :</label>
+            <input type="text" class="form-control" name="title" required value="{{ ticket.title }}">
+        </div>
+        <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea class="form-control" name="description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+</div>
+<script>
+    description_area = document.getElementsByName("description");
+    description_area[0].value = "{{ ticket.description }}";
+</script>
+{% endblock %}
