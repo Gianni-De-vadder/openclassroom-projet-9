@@ -7,6 +7,16 @@
 
 {% block content %}
 <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <a class="btn btn-primary mb-3" href="/review/create_ticket">Demander une critique</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a class="btn btn-primary mb-3" href="/review/create_ticket_review">Créer une critique</a>
+        </div>
+    </div>
+</div>
+<div class="container">
     <h1 class="mt-4">Votre Flux :</h1>
     {% if tickets %}
     <ul class="list-group">
@@ -15,6 +25,7 @@
             <h4>{{ ticket.title }}</h4>
             <p>{{ ticket.description }}</p>
             <p>De : {{ ticket.user}}</p>
+            <p>Date de création : {{ ticket.time_created }}</p>
             {% if ticket.reviews.exists %}
             <div class="card">
                 <div class="card-header">
@@ -27,6 +38,7 @@
                         <a href="{% url 'review_detail' review.id %}" class="btn btn-primary mr-2">Voir</a>
                         {% if user.id == review.user.id %}
                         <a href="{% url 'delete_review' review.id %}" class="btn btn-danger">Supprimer Critique</a>
+                        <a class="btn btn-secondary" href="{% url 'update_review' review.id %}">Modifier</a>
                         {% endif %}
                     </li>
                     {% endfor %}

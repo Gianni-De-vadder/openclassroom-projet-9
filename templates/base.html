@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     {% block extra_head %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
+        integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
@@ -66,18 +68,186 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="text-muted">© 2023 Votre entreprise. Tous droits réservés.</p>
+                    <p class="text-muted">© 2023 LITReview. Tous droits réservés.</p>
                 </div>
                 <div class="col-md-6">
                     <ul class="list-inline text-right">
-                        <li class="list-inline-item"><a href="#">Mentions légales</a></li>
-                        <li class="list-inline-item"><a href="#">Politique de confidentialité</a></li>
-                        <li class="list-inline-item"><a href="#">Conditions d'utilisation</a></li>
+                        <li class="list-inline-item"><a class="list-inline-item" href="#" data-toggle="modal"
+                                data-target="#modal-mentions-legales">Mentions légales</a>
+                        </li>
+                        <li class="list-inline-item"><a href="#modal-politique-confidentialite"
+                                data-toggle="modal">Politique de confidentialité</a></li>
+                        <li class="list-inline-item"><a href="#modal-conditions-utilisation"
+                                data-toggle="modal">Conditions d'utilisation</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Modal Mentions légales -->
+    <div class="modal fade" id="modal-mentions-legales" tabindex="-1" role="dialog"
+        aria-labelledby="modal-mentions-legales-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-mentions-legales-label">Mentions légales</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenu des mentions légales -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Éditeur du site</h4>
+                                <p>LitReview SAS</p>
+                                <p>Adresse : 123 Rue du N'importe Quoi, 75000 Paris, France</p>
+                                <p>Téléphone : +33 6 12 34 56 78</p>
+                                <p>E-mail : contact@litreview.com</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Directeur de la publication</h4>
+                                <p>Sam CTO</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h4>Hébergement</h4>
+                                <p>Fourni par : HébergementFaux.com</p>
+                                <p>Adresse : 456 Avenue de l'Imagination, 75001 Paris, France</p>
+                                <p>Téléphone : +33 6 98 76 54 32</p>
+                                <p>E-mail : contact@hebergementfaux.com</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Identification fiscale</h4>
+                                <p>Numéro d'identification fiscale : Numéro de TVA intracommunautaire : FR1234567890</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h4>Activité</h4>
+                                <p>LitReview est une entreprise spécialisée dans les critiques et les demandes de
+                                    critique de livres et d'articles. Nous offrons des services de recommandation, de
+                                    notation et de partage d'opinions sur les œuvres littéraires.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h4>Protection des données personnelles</h4>
+                                <p>LitReview s'engage à respecter la confidentialité et la sécurité des données
+                                    personnelles de ses utilisateurs. Pour en savoir plus, veuillez consulter notre
+                                    politique de confidentialité.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h4>Droit d'auteur</h4>
+                                <p>Tous les contenus présents sur le site de LitReview, tels que les textes, les images,
+                                    les vidéos, les logos et les graphiques, sont protégés par les lois sur le droit
+                                    d'auteur et appartiennent à LitReview ou à ses partenaires.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-politique-confidentialite" tabindex="-1" role="dialog"
+        aria-labelledby="modal-politique-confidentialite-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-politique-confidentialite-label">Politique de confidentialité</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenu de la politique de confidentialité -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Collecte des données personnelles</h4>
+                                <p>Nous collectons les données personnelles des utilisateurs dans le cadre de nos
+                                    services afin de fournir une expérience personnalisée et de qualité. Les
+                                    informations collectées peuvent inclure :</p>
+                                <ul>
+                                    <li>Prénom et nom</li>
+                                    <li>Adresse e-mail</li>
+                                    <li>Numéro de téléphone</li>
+                                    <li>Adresse postale</li>
+                                </ul>
+                                <p>Nous nous engageons à ne pas divulguer ces informations à des tiers sans votre
+                                    consentement préalable.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h4>Utilisation des données personnelles</h4>
+                                <p>Les données personnelles collectées sont utilisées dans le but de :</p>
+                                <ul>
+                                    <li>Fournir nos services et répondre aux demandes des utilisateurs</li>
+                                    <li>Améliorer notre site et nos services</li>
+                                    <li>Communiquer avec les utilisateurs concernant les mises à jour, les offres
+                                        spéciales et les nouvelles fonctionnalités</li>
+                                </ul>
+                                <p>Nous ne vendons pas, ne louons pas et ne partageons pas vos données personnelles avec
+                                    des tiers à des fins commerciales.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h4>Protection des données personnelles</h4>
+                                <p>Nous mettons en place des mesures de sécurité appropriées pour protéger vos données
+                                    personnelles contre tout accès non autorisé, toute divulgation, toute altération ou
+                                    toute destruction.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h4>Conservation des données personnelles</h4>
+                                <p>Nous conservons vos données personnelles aussi longtemps que nécessaire pour
+                                    atteindre les objectifs décrits dans cette politique de confidentialité, à moins que
+                                    la loi ne l'exige autrement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-conditions-utilisation" tabindex="-1" role="dialog"
+        aria-labelledby="modal-conditions-utilisation-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-conditions-utilisation-label">Conditions d'utilisation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Conditions générales</h4>
+                                <p>Le site décline toute responsabilité concernant les éventuels virus pouvant infecter
+                                    le matériel informatique de l'Utilisateur après l'utilisation ou l'accès à ce site.
+                                    Le site ne peut être tenu pour responsable en cas de force majeure ou du fait
+                                    imprévisible et insurmontable d'un tiers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     {% block extra_body %}{% endblock %}
 </body>

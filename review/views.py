@@ -90,20 +90,25 @@ def subscription_view(request):
         if user_id:
             User = get_user_model()
             user_to_follow = User.objects.get(id=user_id)
-            # Vérifier si la relation existe déjà
-            if UserFollows.objects.filter(
-                user=request.user, followed_user=user_to_follow
-            ).exists():
-                messages.error(request, "Vous suivez déjà cet utilisateur.")
+
+            # Vérifier si l'utilisateur essaie de s'abonner à lui-même
+            if request.user == user_to_follow:
+                messages.error(request, "Vous ne pouvez pas vous abonner à vous-même.")
             else:
-                userfollow = UserFollows(
+                # Vérifier si la relation existe déjà
+                if UserFollows.objects.filter(
                     user=request.user, followed_user=user_to_follow
-                )
-                userfollow.save()
-                messages.success(
-                    request, "Vous vous êtes abonné à cet utilisateur avec succès."
-                )
-                return redirect("subscription")
+                ).exists():
+                    messages.error(request, "Vous suivez déjà cet utilisateur.")
+                else:
+                    userfollow = UserFollows(
+                        user=request.user, followed_user=user_to_follow
+                    )
+                    userfollow.save()
+                    messages.success(
+                        request, "Vous vous êtes abonné à cet utilisateur avec succès."
+                    )
+                    return redirect("subscription")
 
     return render(request, "review/subscriptions.html")
 

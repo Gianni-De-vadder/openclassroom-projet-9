@@ -76,26 +76,30 @@
                 resultsContainer.innerHTML = "";
 
                 data.forEach(user => {
-                    const userElement = document.createElement("p");
-                    userElement.textContent = user.username;
-                    userElement.classList.add("user-result");
-                    userElement.addEventListener("click", () => {
-                        document.getElementById("user-id").value = user.id;
-                        document.getElementById("user-input").value = user.username;
-                        resultsContainer.innerHTML = "";
-                    });
-                    resultsContainer.appendChild(userElement);
+                    // Vérifier si l'utilisateur n'est pas l'utilisateur connecté
+                    if (user.username !== "{{ request.user.username }}") {
+                        const userElement = document.createElement("p");
+                        userElement.textContent = user.username;
+                        userElement.classList.add("user-result");
+                        userElement.addEventListener("click", () => {
+                            document.getElementById("user-id").value = user.id;
+                            document.getElementById("user-input").value = user.username;
+                            resultsContainer.innerHTML = "";
+                        });
+                        resultsContainer.appendChild(userElement);
+                    }
                 });
             });
     }
 
     document.getElementById("user-input").addEventListener("input", event => {
         const query = event.target.value.trim();
-        if (query.length >= 1) {
+        if (query.length >= 2) {  // Modifier à 2 pour correspondre aux deux premières lettres
             searchUsers(query);
         }
     });
 </script>
+
 
 <style>
     .user-result {
