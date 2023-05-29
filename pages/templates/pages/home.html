@@ -18,21 +18,22 @@
 </div>
 <div class="container">
     <h1 class="mt-4">Votre Flux :</h1>
-    {% if tickets %}
+    {% if posts %}
     <ul class="list-group">
-        {% for ticket in tickets %}
+        {% for post in posts %}
+        {% if post.content_type == 'TICKET' %}
         <li class="list-group-item">
-            <h4>{{ ticket.title }}</h4>
-            <p>{{ ticket.description }}</p>
-            <p>De : {{ ticket.user}}</p>
-            <p>Date de création : {{ ticket.time_created }}</p>
-            {% if ticket.reviews.exists %}
+            <h4>{{ post.title }}</h4>
+            <p>{{ post.description }}</p>
+            <p>De : {{ post.user }}</p>
+            <p>Date de création : {{ post.time_created }}</p>
+            {% if post.reviews.exists %}
             <div class="card">
                 <div class="card-header">
                     Critiques associées à la demande de critique
                 </div>
                 <ul class="list-group list-group-flush">
-                    {% for review in ticket.reviews.all %}
+                    {% for review in post.reviews.all %}
                     <li class="list-group-item">
                         <p class="text-muted">Critique : {{ review.headline }}</p>
                         <a href="{% url 'review_detail' review.id %}" class="btn btn-primary mr-2">Voir</a>
@@ -45,9 +46,15 @@
                 </ul>
             </div>
             {% else %}
-            <a href="{% url 'create_review' ticket.id %}" class="btn btn-success">Répondre</a>
+            <a href="{% url 'create_review' post.id %}" class="btn btn-success">Répondre</a>
             {% endif %}
         </li>
+        {% else %}
+        <li class="list-group-item">
+            <!-- Afficher les détails de la review -->
+            <!-- ... -->
+        </li>
+        {% endif %}
         {% endfor %}
     </ul>
     {% else %}
