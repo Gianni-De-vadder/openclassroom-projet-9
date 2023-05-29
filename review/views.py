@@ -12,10 +12,13 @@ def create_ticket(request):
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
+        image = request.FILES.get("image")  # Récupérer le fichier image
+
         ticket = Ticket.objects.create(
-            title=title, description=description, user=request.user
+            title=title, description=description, image=image, user=request.user
         )
-        ticket.save()
+        return redirect("tickets")
+    
     return render(request, "review/create_ticket.html")
 
 

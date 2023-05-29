@@ -5,7 +5,7 @@
     <h1>Demander critique</h1>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="title">Titre :</label>
@@ -15,10 +15,15 @@
                     <label for="description">Description :</label>
                     <textarea class="form-control" name="description" rows="8" required></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="image">Image :</label>
+                    <input type="file" class="form-control-file" name="image">
+                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block">Créer</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

@@ -25,6 +25,11 @@
         <li class="list-group-item">
             <h4>{{ post.title }}</h4>
             <p>{{ post.description }}</p>
+            {% if post.image %}
+            <div class="text-center">
+                <img src="{{ post.image.url }}" class="img-fluid" alt="Ticket Image">
+            </div>
+            {% endif %}
             <p>De : {{ post.user }}</p>
             <p>Date de création : {{ post.time_created }}</p>
             {% if post.reviews.exists %}
